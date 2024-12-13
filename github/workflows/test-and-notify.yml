@@ -1,9 +1,12 @@
 name: Test and Notify
-
 on:
+  push:
+    branches:
+      - main
   pull_request:
-    types: [opened, synchronize]
-
+    types:
+      - opened
+      - synchronize
 jobs:
   test:
     runs-on: ubuntu-latest
