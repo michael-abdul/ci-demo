@@ -1,0 +1,26 @@
+name: Test and Notify
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run Tests
+      run: |
+        echo "Running tests..."
+        # Test muvaffaqiyatsizlikni simulyatsiya qilish uchun
+        exit 1
+
+    - name: Notify on Failure
+      if: failure()
+      run: |
+        curl -X POST -H 'Content-type: application/json' \
+        --data '{"text":"⚠️ Test failed for PR #${{ github.event.pull_request.number }} in repository ${{ github.repository }}. Please review the changes."}' \
+        ${{ secrets.SLACK_WEBHOOK }}
